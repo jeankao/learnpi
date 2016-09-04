@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Teachers {% endblock %}
+{% load tag %}
+{% block content %}
+        <a href="add">加入班級</a><BR><BR>
+        
+        <table>
+        {% for enroll in enrolls %}
+        <tr>
+            <td rowspan=7>班級：{{enroll.classroom}}</td>
+            <td rowspan=7>座號：{{enroll.seat}}</td>
+            <td>基本資料：
+			<a href="/student/classroom/seat/{{enroll.id}}/{{enroll.classroom_id}}">座號</a>｜			
+			<a href="/student/group/{{enroll.classroom_id}}">組別</a>｜
+			<a href="/student/classmate/{{enroll.classroom_id}}">同學</a>｜
+			</td>
+		</tr>
+        <tr>
+            <td>互動：
+			<a href="/student/announce/{{enroll.classroom_id}}">公告</a>｜
+		    <a href="/account/line/{{enroll.classroom_id}}">我的私訊</a>｜			
+		    <a href="/account/line/class/{{enroll.classroom_id}}">私訊同學</a>｜					    
+			<a href="/account/line/add/{{enroll.classroom_id}}/{{enroll.classroom_id|teacher_id}}">私訊老師</a>｜	
+			</td>
+		</tr>
+        {% endfor %}
+        </table>
+{% endblock %}
