@@ -6,11 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView
 from django.core.exceptions import ObjectDoesNotExist
 #from django.contrib.auth.models import Group
-from teacher.models import Classroom
+from teacher.models import Classroom, TWork
 from student.models import Enroll
 from account.models import Log, Message, MessagePoll, Profile
 from student.models import Enroll, EnrollGroup, Assistant
-from .forms import ClassroomForm, AnnounceForm
+from .forms import ClassroomForm, AnnounceForm, WorkForm
 from django.http import JsonResponse
 import StringIO
 from datetime import datetime
@@ -364,4 +364,59 @@ def event_video_make(request):
     else:
             return JsonResponse({'status':'ko'}, safe=False)
 
+# 列出所有課程
+class WorkListView(ListView):
+    model = TWork
+    context_object_name = 'works'
+    paginate_by = 20
+    def get_queryset(self):
+        # 記錄系統事件
+        if is_event_open(self.request) :    
+            log = Log(user_id=self.request.user.id, event='查看作業列表')
+            log.save()        
+        queryset = TWork.objects.filter(teacher_id=self.request.user.id).order_by("-id")
+        return queryset
+			
+    def get_context_data(self, **kwargs):
+        context = super(WorkListView, self).get_context_data(**kwargs)
+        context['classroom_id'] = self.kwargs['classroom_id']
+        return context	
+        
+#新增一個課程
+class WorkCreateView(CreateView):
+    model = TWork
+    form_class = WorkForm
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.teacher_id = self.request.user.id
+        self.object.classroom_id = self.kwargs['classroom_id']
+        self.object.save()  
+        # 記錄系統事件
+        if is_event_open(self.request) :            
+            log = Log(user_id=self.request.user.id, event=u'新增作業<'+self.object.title+'>')
+            log.save()                
+        return redirect("/teacher/work/"+self.kwargs['classroom_id'])        
+        
+# 修改選課密碼
+def work_edit(request, classroom_id):
+    # 限本班任課教師
+    if not is_teacher(request.user, classroom_id):
+        return redirect("homepage")
+    classroom = Classroom.objects.get(id=classroom_id)
+    if request.method == 'POST':
+        form = ClassroomForm(request.POST)
+        if form.is_valid():
+            classroom.name =form.cleaned_data['name']
+            classroom.password = form.cleaned_data['password']
+            classroom.save()
+            # 記錄系統事件
+            if is_event_open(request) :                
+                log = Log(user_id=request.user.id, event=u'修改選課密碼<'+classroom.name+'>')
+                log.save()                    
+            return redirect('/teacher/classroom')
+    else:
+        form = ClassroomForm(instance=classroom)
+
+    return render_to_response('form.html',{'form': form}, context_instance=RequestContext(request))        
+    			
 		

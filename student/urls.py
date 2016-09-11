@@ -2,7 +2,7 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 from . import views
-from student.views import AnnounceListView
+from student.views import AnnounceListView, WorkListView
 
 urlpatterns = [
     # 選課
@@ -22,4 +22,8 @@ urlpatterns = [
   	url(r'^group/delete/(?P<group_id>[^/]+)/(?P<classroom_id>[^/]+)/$', views.group_delete),
     #公告
     url(r'^announce/(?P<classroom_id>\d+)/$', login_required(AnnounceListView.as_view()), name='announce-list'),
+    #作業
+    url(r'^work/(?P<classroom_id>\d+)/$', login_required(WorkListView.as_view()), name='work-list'),  
+    url(r'^work/submit/(?P<index>\d+)/$', views.submit),    
+    url(r'^work/show/(?P<index>\d+)/$', views.show),      
 ]

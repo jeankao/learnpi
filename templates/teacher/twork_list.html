@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %} Teachers {% endblock %}
+{% block content %}
+        <a href="/teacher/work/add/{{classroom_id}}">新增作業</a><BR><BR>
+        <table>
+            <tr>
+                <td>名稱</td>
+                <td>功能</td>
+        {% for work in works %}
+            <tr>
+            <td>{{work.title}}</td>
+            <td>
+					
+            </td>
+            </tr>
+        {% endfor %}
+        </table>
+{% endblock %}

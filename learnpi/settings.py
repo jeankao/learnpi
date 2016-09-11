@@ -53,7 +53,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'eclassroom.urls'
+ROOT_URLCONF = 'learnpi.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'eclassroom.wsgi.application'
+WSGI_APPLICATION = 'learnpi.wsgi.application'
 
 
 # Database

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from teacher.models import Classroom
-from student.models import Work, Enroll
+from teacher.models import Classroom, TWork
+#from student.models import Work, Enroll
 from account.models import Message
 
 # 新增一個課程表單
@@ -28,4 +28,13 @@ class AnnounceForm(forms.ModelForm):
             self.fields['content'].label = "公告內容"
             self.fields['content'].widget.attrs['cols'] = 50
             self.fields['content'].widget.attrs['rows'] = 20        
-            
+           
+# 新增一個作業
+class WorkForm(forms.ModelForm):
+        class Meta:
+           model = TWork
+           fields = ['title']
+        
+        def __init__(self, *args, **kwargs):
+            super(WorkForm, self).__init__(*args, **kwargs)
+            self.fields['title'].label = "作業名稱"

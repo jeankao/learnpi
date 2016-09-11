@@ -5,10 +5,14 @@ from django.template import RequestContext
 from django.views.generic import ListView, CreateView
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import Group
-from teacher.models import Classroom
-from student.models import Enroll, EnrollGroup, Assistant
+from teacher.models import Classroom, TWork
+from student.models import Enroll, EnrollGroup, Assistant, SWork
 from account.models import Log, Message, MessagePoll, Profile, VisitorLog
-from student.forms import EnrollForm, GroupForm, SeatForm, GroupSizeForm
+from student.forms import EnrollForm, GroupForm, SeatForm, GroupSizeForm, SubmitForm
+from django.utils import timezone
+from django.core.files import File 
+import cStringIO as StringIO
+from PIL import Image,ImageDraw,ImageFont
 
 # 判斷是否為授課教師
 def is_teacher(user, classroom_id):
@@ -279,4 +283,84 @@ class AnnounceListView(ListView):
         except ObjectDoesNotExist :
             return redirect('/')
         return super(AnnounceListView, self).render_to_response(context)    
+      
+# 列出所有作業
+class WorkListView(ListView):
+    model = TWork
+    context_object_name = 'works'
+    template_name = 'student/work_list.html'    
+    paginate_by = 20
+    
+    def get_queryset(self):
+        classroom = Classroom.objects.get(id=self.kwargs['classroom_id'])
+        # 記錄系統事件
+        if is_event_open(self.request) :    
+            log = Log(user_id=self.request.user.id, event='查看班級作業')
+            log.save()        
+        queryset = TWork.objects.filter(classroom_id=self.kwargs['classroom_id']).order_by("-id")
+        return queryset
+        
+    def get_context_data(self, **kwargs):
+        context = super(WorkListView, self).get_context_data(**kwargs)
+        context['classroom_id'] = self.kwargs['classroom_id']
+        return context	    
+
+    # 限本班同學
+    def render_to_response(self, context):
+        try:
+            enroll = Enroll.objects.get(student_id=self.request.user.id, classroom_id=self.kwargs['classroom_id'])
+        except ObjectDoesNotExist :
+            return redirect('/')
+        return super(WorkListView, self).render_to_response(context)    
+			
+def submit(request, index):
+        scores = []
+        if request.method == 'POST':
+            form = SubmitForm(request.POST, request.FILES)
+            if form.is_valid():						
+                try: 
+                    work = SWork.objects.get(index=index, student_id=request.user.id)
+                    work.code=form.cleaned_data['code']
+                    work.picture=form.cleaned_data['picture']
+                    work.memo=form.cleaned_data['memo']
+                    work.save()
+                    # 記錄系統事件 
+                    if is_event_open(request) :                      
+                        log = Log(user_id=request.user.id, event=u'更新作業成功<'.encode("UTF-8")+index.encode("UTF-8")+'>')
+                        log.save()																					
+                except ObjectDoesNotExist:
+                    work = SWork(index=index, student_id=request.user.id)
+                    work.save()										
+                    work.picture=form.cleaned_data['picture']
+                    work.memo=form.cleaned_data['memo'] 
+                    work.code=form.cleaned_data['code']
+                    work.save()
+                    image_field = work.picture
+                    image_file = StringIO.StringIO(image_field.read())
+                    image = Image.open(image_file)
+                    #image = image.resize((800, 600), Image.ANTIALIAS)
+
+                    image_file = StringIO.StringIO()
+                    image.save(image_file, 'JPEG', quality=90)						
+					# credit
+                    #update_avatar(request.user.id, 1, 2)
+                    # History
+                    #history = PointHistory(user_id=request.user.id, kind=1, message='2分--繳交作業<'+index+'>', url=request.get_full_path().replace("submit", "submitall"))
+                    #history.save()
+                    # 記錄系統事件 
+                    if is_event_open(request) :                      
+                        log = Log(user_id=request.user.id, event=u'新增作業成功<'.encode("UTF-8")+index.encode("UTF-8")+'>')
+                        log.save() 
+                return redirect("/student/work/show/"+index)
+            else:
+                return render_to_response('student/submit.html', {'error':form.errors}, context_instance=RequestContext(request))
+        else:
+            form = SubmitForm()
+        return render_to_response('student/submit.html', {'form':form, 'scores':scores, 'index':index}, context_instance=RequestContext(request))
+
+def show(request, index):
+        work = SWork.objects.get(index=index, student_id=request.user.id)
+        return render_to_response('student/show.html', {'work':work}, context_instance=RequestContext(request))
+
+      
       

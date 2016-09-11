@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from teacher.models import Classroom
-from student.models import Enroll, EnrollGroup, Work
+from student.models import Enroll, EnrollGroup, SWork
 
 class EnrollForm(forms.Form):
         password =  forms.CharField()
@@ -35,4 +35,9 @@ class SeatForm(forms.ModelForm):
         class Meta:
             model = Enroll
             fields = ['seat']
-
+          
+class SubmitForm(forms.Form):
+        code = forms.CharField(widget=forms.Textarea)
+        picture = forms.ImageField()
+        memo = forms.CharField(widget=forms.Textarea)
+                       

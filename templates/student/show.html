@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Create a question{% endblock %}
+{% block content %}
+            分數：{{ work.score}} / 
+            評分者：{{ work.scorer }}
+            尚未評分 <BR>     
+            心得感想：<BR>{{work.memo}}<BR>              
+            程式碼：<pre>{{work.code}}</pre><BR>
+            執行結果：<img src="/static/pic/{{work.id}}/run.jpg"><BR>
+
+{% endblock %}

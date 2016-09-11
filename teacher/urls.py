@@ -2,7 +2,7 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 from . import views
-from teacher.views import ClassroomListView, ClassroomCreateView, AnnounceListView, AnnounceCreateView
+from teacher.views import ClassroomListView, ClassroomCreateView, AnnounceListView, AnnounceCreateView, WorkListView, WorkCreateView
 
 urlpatterns = [
     url(r'^classroom/$', login_required(ClassroomListView.as_view()), name='classroom-list'),
@@ -20,4 +20,8 @@ urlpatterns = [
     url(r'^event/excel/(?P<classroom_id>\d+)/$', views.event_excel),
     url(r'^event/make/$', views.event_make),    
     url(r'^event/video/make/$', views.event_video_make),
+    # 作業
+    url(r'^work/(?P<classroom_id>\d+)/$', login_required(WorkListView.as_view()), name='work-list'),
+    url(r'^work/add/(?P<classroom_id>\d+)/$', login_required(WorkCreateView.as_view()), name='work-add'),
+    url(r'^work/edit/(?P<classroom_id>\d+)/$', views.work_edit, name='work-edit'),  
 ]

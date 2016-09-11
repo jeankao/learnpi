@@ -81,4 +81,23 @@ class Assistant(models.Model):
     
     @property        
     def student(self):
-        return User.objects.get(id=self.student_id)         
+        return User.objects.get(id=self.student_id)   
+
+def upload_path_handler(instance, filename):
+    return "static/pic/{id}/{filename}.jpg".format(id=instance.id, filename='run')	
+			
+#作業
+class SWork(models.Model):
+    student_id = models.IntegerField(default=0)
+    index = models.IntegerField()
+    picture = models.ImageField(upload_to = upload_path_handler, default = '/static/pic/null.jpg')
+    memo = models.TextField(default='')
+    code = models.TextField(default='')		
+    publication_date = models.DateTimeField(default=timezone.now)
+    score = models.IntegerField(default=-1)
+    scorer = models.IntegerField(default=0)
+		
+    def __unicode__(self):
+        user = User.objects.filter(id=self.student_id)[0]
+        index = self.index
+        return user.first_name+"("+str(index)+")"		

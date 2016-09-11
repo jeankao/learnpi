@@ -8,7 +8,8 @@
 <body>
 		{% if user.is_authenticated %}
 		{{ user.first_name }}
-		<a href="/student/classroom">班級</a>
+	  <a href="https://jeankao.gitbooks.io/python/content/" target="_blank">課程</a>
+	  <a href="/student/classroom">班級</a>
 		<a href="/account">訊息{% if request.user.id|unread > 0 %}({{request.user.id|unread}}){% endif %}</a>
 			{% if user|event %}
 		    <a href="/account/event/{{user.id}}">事件</a>

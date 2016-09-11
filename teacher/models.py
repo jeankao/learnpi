@@ -31,3 +31,8 @@ class Classroom(models.Model):
     def __unicode__(self):
         return self.name
         
+#作業
+class TWork(models.Model):
+    title = models.CharField(max_length=250)
+    teacher_id = models.IntegerField(default=0)		
+    classroom_id = models.IntegerField(default=0)
