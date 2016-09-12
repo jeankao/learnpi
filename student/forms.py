@@ -38,6 +38,6 @@ class SeatForm(forms.ModelForm):
           
 class SubmitForm(forms.Form):
         code = forms.CharField(widget=forms.Textarea)
-        picture = forms.ImageField()
+        screenshot = forms.CharField(widget=forms.HiddenInput())
         memo = forms.CharField(widget=forms.Textarea)
                        

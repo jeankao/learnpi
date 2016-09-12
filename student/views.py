@@ -13,6 +13,8 @@ from django.utils import timezone
 from django.core.files import File 
 import cStringIO as StringIO
 from PIL import Image,ImageDraw,ImageFont
+from binascii import a2b_base64
+import os
 
 # 判斷是否為授課教師
 def is_teacher(user, classroom_id):
@@ -319,38 +321,29 @@ def submit(request, index):
             form = SubmitForm(request.POST, request.FILES)
             if form.is_valid():						
                 try: 
+                    dataURI = form.cleaned_data['screenshot']
+                    head, data = dataURI.split(',', 1)
+                    mime, b64 = head.split(';', 1)
+                    mtype, fext = mime.split('/', 1)
+                    binary_data = a2b_base64(data)
                     work = SWork.objects.get(index=index, student_id=request.user.id)
+                    directory = "static/pic/{uid}/{id}".format(uid=request.user.id, id=work.id)
+                    image_file = "static/pic/{uid}/{id}/{filename}.jpg".format(uid=request.user.id, id=work.id, filename='run')
+                    if not os.path.exists(directory):
+                        os.makedirs(directory)
+                    with open(image_file, 'wb') as fd:
+                        fd.write(binary_data)
+                        fd.close()
                     work.code=form.cleaned_data['code']
-                    work.picture=form.cleaned_data['picture']
+                    work.picture=image_file
                     work.memo=form.cleaned_data['memo']
                     work.save()
-                    # 記錄系統事件 
-                    if is_event_open(request) :                      
-                        log = Log(user_id=request.user.id, event=u'更新作業成功<'.encode("UTF-8")+index.encode("UTF-8")+'>')
-                        log.save()																					
                 except ObjectDoesNotExist:
-                    work = SWork(index=index, student_id=request.user.id)
-                    work.save()										
-                    work.picture=form.cleaned_data['picture']
-                    work.memo=form.cleaned_data['memo'] 
-                    work.code=form.cleaned_data['code']
-                    work.save()
-                    image_field = work.picture
-                    image_file = StringIO.StringIO(image_field.read())
-                    image = Image.open(image_file)
-                    #image = image.resize((800, 600), Image.ANTIALIAS)
-
-                    image_file = StringIO.StringIO()
-                    image.save(image_file, 'JPEG', quality=90)						
-					# credit
-                    #update_avatar(request.user.id, 1, 2)
-                    # History
-                    #history = PointHistory(user_id=request.user.id, kind=1, message='2分--繳交作業<'+index+'>', url=request.get_full_path().replace("submit", "submitall"))
-                    #history.save()
-                    # 記錄系統事件 
-                    if is_event_open(request) :                      
-                        log = Log(user_id=request.user.id, event=u'新增作業成功<'.encode("UTF-8")+index.encode("UTF-8")+'>')
-                        log.save() 
+                    pass
+                # 記錄系統事件 
+                if is_event_open(request) :                      
+                    log = Log(user_id=request.user.id, event=u'新增作業成功<'.encode("UTF-8")+index.encode("UTF-8")+'>')
+                    log.save() 
                 return redirect("/student/work/show/"+index)
             else:
                 return render_to_response('student/submit.html', {'error':form.errors}, context_instance=RequestContext(request))

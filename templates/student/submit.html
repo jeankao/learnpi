@@ -31,20 +31,19 @@
                 alert("請先貼上螢幕擷圖後再按上傳");
                 event.preventDefault();
             } else {
-                $("#id_picture").val(img[0].src);
+                $("#screenshot").val(img[0].src);
             }
         });
     });
 </script>
 {% endblock %}
 {% block content %}
-error:{{error}}
             <br>
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            心得感想：{{form.memo}}<BR>              
             程式碼：{{ form.code }}<BR>
-            執行結果：<!--<div id="edit-box" class="target" contenteditable="true">請在此貼上螢幕擷圖...</div>
-<input id="id_picture" name="picture" type="file" style="display:none"/>-->{{form.picture}}<BR>
-            心得感想：{{form.memo}}<BR>
+            執行結果：<div id="edit-box" class="target" contenteditable="true">請在此貼上螢幕擷圖...</div>
+<input id="screenshot" name="screenshot" type="hidden" value="" /><BR>
             <input id="submit" type="submit" value="送出" />
             </form>
         <br>

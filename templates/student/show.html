@@ -6,6 +6,6 @@
             尚未評分 <BR>     
             心得感想：<BR>{{work.memo}}<BR>              
             程式碼：<pre>{{work.code}}</pre><BR>
-            執行結果：<img src="/static/pic/{{work.id}}/run.jpg"><BR>
+            執行結果：<img src="/static/pic/{{request.user.id}}/{{work.id}}/run.jpg"><BR>
 
 {% endblock %}
