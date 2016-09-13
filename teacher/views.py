@@ -434,7 +434,7 @@ def work_class(request, classroom_id, work_id):
             else :
                 scorer_name = "1"
         except ObjectDoesNotExist:
-            work = SWork(index=work_id, user_id=1)
+            work = SWork(index=work_id, student_id=1)
         try:
             group_name = EnrollGroup.objects.get(id=enroll.group).name
         except ObjectDoesNotExist:
