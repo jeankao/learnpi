@@ -1,0 +1,30 @@
+@charset "utf-8";
+/*
+Template Name: Workit V.2
+Author: <a href="http://www.os-templates.com/">OS Templates</a>
+Author URI: http://www.os-templates.com/
+Licence: Free to use under our free template licence terms
+Licence URI: http://www.os-templates.com/template-terms
+File: Homepage CSS
+*/
+
+#container #homepage{display:block; width:100%;}
+
+#container #homepage #shout{color:#333333; background-color:#FFFFFF; text-align:center; font-size:36px; line-height:normal;}
+#container #homepage #shout p{margin:0; padding:0;}
+
+#container #homepage #latest{margin:0 0 50px 0; padding:0 0 50px 0; border-bottom:1px solid #D6D6D6;}
+#container #homepage #latest article{}
+#container #homepage #latest article figure ul{display:block; float:left; margin:0; padding:0; list-style:none;}
+#container #homepage #latest article figure ul li{margin-bottom:10px;}
+#container #homepage #latest article figure ul li img{display:block; padding:4px; border:1px solid #D6D6D6;}
+#container #homepage #latest article figure figcaption{display:block; float:right; width:300px; padding-top:35px;}
+#container #homepage #latest article figure figcaption header{margin:0; padding:0; font-size:20px;}
+#container #homepage #latest article figure figcaption footer{display:block; text-align:right;}
+
+#container #homepage #services{margin:0 0 50px 0; padding:0 0 50px 0; border-bottom:1px solid #D6D6D6;}
+#container #homepage #services article{}
+#container #homepage #services article h2{margin-bottom:10px;}
+#container #homepage #services article img{float:left; margin:5px 10px 0 0;}
+#container #homepage #services article p{margin:0; padding:0;}
+#container #homepage #info{margin:0;}

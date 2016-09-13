@@ -252,7 +252,7 @@ class LoginLogListView(ListView):
         else :
             context['page'] = 0
         return context        
- 
+
 # 列出所有公告
 class AnnounceListView(ListView):
     model = Message
@@ -321,25 +321,26 @@ def submit(request, index):
             form = SubmitForm(request.POST, request.FILES)
             if form.is_valid():						
                 try: 
-                    dataURI = form.cleaned_data['screenshot']
-                    head, data = dataURI.split(',', 1)
-                    mime, b64 = head.split(';', 1)
-                    mtype, fext = mime.split('/', 1)
-                    binary_data = a2b_base64(data)
-                    work = SWork.objects.get(index=index, student_id=request.user.id)
-                    directory = "static/pic/{uid}/{id}".format(uid=request.user.id, id=work.id)
-                    image_file = "static/pic/{uid}/{id}/{filename}.jpg".format(uid=request.user.id, id=work.id, filename='run')
-                    if not os.path.exists(directory):
-                        os.makedirs(directory)
-                    with open(image_file, 'wb') as fd:
-                        fd.write(binary_data)
-                        fd.close()
-                    work.code=form.cleaned_data['code']
-                    work.picture=image_file
-                    work.memo=form.cleaned_data['memo']
-                    work.save()
+                    work = SWork.objects.get(index=index, student_id=request.user.id)				
                 except ObjectDoesNotExist:
-                    pass
+                    work = SWork(index=index, student_id=request.user.id)		
+                work.save()					
+                dataURI = form.cleaned_data['screenshot']
+                head, data = dataURI.split(',', 1)
+                mime, b64 = head.split(';', 1)
+                mtype, fext = mime.split('/', 1)
+                binary_data = a2b_base64(data)
+                directory = "static/pic/{uid}/{id}".format(uid=request.user.id, id=work.id)
+                image_file = "static/pic/{uid}/{id}/{filename}.jpg".format(uid=request.user.id, id=work.id, filename='run')
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                with open(image_file, 'wb') as fd:
+                    fd.write(binary_data)
+                    fd.close()
+                work.code=form.cleaned_data['code']
+                work.picture=image_file
+                work.memo=form.cleaned_data['memo']
+                work.save()
                 # 記錄系統事件 
                 if is_event_open(request) :                      
                     log = Log(user_id=request.user.id, event=u'新增作業成功<'.encode("UTF-8")+index.encode("UTF-8")+'>')
