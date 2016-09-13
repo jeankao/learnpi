@@ -59,20 +59,6 @@ class EnrollGroup(models.Model):
     name = models.CharField(max_length=30)
     classroom_id = models.IntegerField(default=0)
     
-class Work(models.Model):
-    user_id = models.IntegerField(default=0) 
-    index = models.IntegerField()
-    number = models.CharField(max_length=30, unique=True)
-    memo = models.TextField()
-    publication_date = models.DateTimeField(default=timezone.now)
-    score = models.IntegerField(default=-1)
-    scorer = models.IntegerField(default=0)
-    
-    def __unicode__(self):
-        user = User.objects.filter(id=self.user_id)[0]
-        index = self.index
-        return user.first_name+"("+str(index)+")"
-
 # 小老師        
 class Assistant(models.Model):
     student_id = models.IntegerField(default=0)

@@ -356,4 +356,21 @@ def show(request, index):
         return render_to_response('student/show.html', {'work':work}, context_instance=RequestContext(request))
 
       
-      
+# 查詢某作業所有同學心得
+def memo(request, classroom_id, index):
+    enrolls = Enroll.objects.filter(classroom_id=classroom_id)
+    datas = []
+    for enroll in enrolls:
+        try:
+            work = SWork.objects.get(index=index, student_id=enroll.student_id)
+            datas.append([enroll.seat, enroll.student.first_name, work.memo])
+        except ObjectDoesNotExist:
+            datas.append([enroll.seat, enroll.student.first_name, ""])
+    def getKey(custom):
+        return custom[0]
+    datas = sorted(datas, key=getKey)	
+    # 記錄系統事件
+    if is_event_open(request) :      
+        log = Log(user_id=request.user.id, event=u'查看某作業所有同學心得<'+index+'>')
+        log.save()    
+    return render_to_response('student/memo.html', {'datas': datas}, context_instance=RequestContext(request))

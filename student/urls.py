@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^work/(?P<classroom_id>\d+)/$', login_required(WorkListView.as_view()), name='work-list'),  
     url(r'^work/submit/(?P<index>\d+)/$', views.submit),    
     url(r'^work/show/(?P<index>\d+)/$', views.show),      
+    url(r'^work/memo/(?P<classroom_id>\d+)/(?P<index>\d+)/$', views.memo),       
 ]

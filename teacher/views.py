@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from teacher.models import Classroom, TWork
 from student.models import Enroll
 from account.models import Log, Message, MessagePoll, Profile
-from student.models import Enroll, EnrollGroup, Assistant
+from student.models import Enroll, EnrollGroup, Assistant, SWork
 from .forms import ClassroomForm, AnnounceForm, WorkForm
 from django.http import JsonResponse
 import StringIO
@@ -374,7 +374,7 @@ class WorkListView(ListView):
         if is_event_open(self.request) :    
             log = Log(user_id=self.request.user.id, event='查看作業列表')
             log.save()        
-        queryset = TWork.objects.filter(teacher_id=self.request.user.id).order_by("-id")
+        queryset = TWork.objects.filter(teacher_id=self.request.user.id, classroom_id=self.kwargs['classroom_id']).order_by("-id")
         return queryset
 			
     def get_context_data(self, **kwargs):
@@ -419,4 +419,39 @@ def work_edit(request, classroom_id):
 
     return render_to_response('form.html',{'form': form}, context_instance=RequestContext(request))        
     			
-		
+# 列出某作業所有同學名單
+def work_class(request, classroom_id, work_id):
+    enrolls = Enroll.objects.filter(classroom_id=classroom_id)
+    classroom_name = Classroom.objects.get(id=classroom_id).name
+    classmate_work = []
+    scorer_name = ""
+    for enroll in enrolls:
+        try:    
+            work = SWork.objects.get(student_id=enroll.student_id, index=work_id)
+            if work.scorer > 0 :
+                scorer = User.objects.get(id=work.scorer)
+                scorer_name = scorer.first_name
+            else :
+                scorer_name = "1"
+        except ObjectDoesNotExist:
+            work = SWork(index=work_id, user_id=1)
+        try:
+            group_name = EnrollGroup.objects.get(id=enroll.group).name
+        except ObjectDoesNotExist:
+            group_name = "沒有組別"
+        assistant = Assistant.objects.filter(classroom_id=classroom_id, student_id=enroll.student_id, lesson=work_id)
+        if assistant.exists():
+            classmate_work.append([enroll,work,1, scorer_name, group_name])
+        else :
+            classmate_work.append([enroll,work,0, scorer_name, group_name])   
+    def getKey(custom):
+        return custom[0].seat
+	
+    classmate_work = sorted(classmate_work, key=getKey)
+    
+    # 記錄系統事件
+    if is_event_open(request) :        
+        log = Log(user_id=request.user.id, event=u'列出某作業所有同學名單<'+classroom_name+'><'+work_id+'>')
+        log.save()          
+    return render_to_response('teacher/work_class.html',{'classmate_work': classmate_work, 'classroom_id':classroom_id, 'index': work_id}, context_instance=RequestContext(request))
+	

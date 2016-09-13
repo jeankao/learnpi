@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^work/(?P<classroom_id>\d+)/$', login_required(WorkListView.as_view()), name='work-list'),
     url(r'^work/add/(?P<classroom_id>\d+)/$', login_required(WorkCreateView.as_view()), name='work-add'),
     url(r'^work/edit/(?P<classroom_id>\d+)/$', views.work_edit, name='work-edit'),  
+    url(r'^work/class/(?P<classroom_id>\d+)/(?P<work_id>\d+)/$', views.work_class, name='work-class'),    
 ]

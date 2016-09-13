@@ -9,9 +9,7 @@
         {% for work in works %}
             <tr>
             <td>{{work.title}}</td>
-            <td>
-					
-            </td>
+            <td><a href="/teacher/work/class/{{classroom_id}}/{{work.id}}">觀看</a></td>
             </tr>
         {% endfor %}
         </table>
