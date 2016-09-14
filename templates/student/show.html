@@ -4,8 +4,8 @@
             分數：{{ work.score}} / 
             評分者：{{ work.scorer }}
             尚未評分 <BR>     
-            心得感想：<BR>{{work.memo}}<BR>              
-            程式碼：<pre>{{work.code}}</pre><BR>
-            執行結果：<img src="/static/pic/{{request.user.id}}/{{work.id}}/run.jpg"><BR>
+              <font color=black>心得感想：</font><BR>{{work.memo}}<BR>              
+              <font color=black>程式碼：</font><pre>{{work.code}}</pre><BR>
+            執行結果：<img width=880 src="/static/pic/{{request.user.id}}/{{work.id}}/run.jpg"><BR>
 
 {% endblock %}

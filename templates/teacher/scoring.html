@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Create a question{% endblock %}
+{% block content %}
+    <br>
+    {% if work.code %}
+        <font color=black>心得感想：</font><BR>
+        {{work.memo}}
+        <br>
+        <font color=black>程式碼：</font><BR>
+        {{work.code}}
+        <br>
+        <font color=black>執行結果：</font><BR>
+        <img src="/static/pic/{{request.user.id}}/{{work.id}}/run.jpg">
+        <form action="" enctype="multipart/form-data"  method="post">
+            <table>
+                {{ form.as_table }}
+            </table>
+            {% csrf_token %}
+            <input type="submit" value="Submit">
+        </form>
+    {% else %}
+        尚未繳交
+    {% endif %}
+{% endblock %}

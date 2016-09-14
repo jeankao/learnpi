@@ -8,9 +8,9 @@ from django.core.exceptions import ObjectDoesNotExist
 #from django.contrib.auth.models import Group
 from teacher.models import Classroom, TWork
 from student.models import Enroll
-from account.models import Log, Message, MessagePoll, Profile
+from account.models import Log, Message, MessagePoll, Profile, PointHistory
 from student.models import Enroll, EnrollGroup, Assistant, SWork
-from .forms import ClassroomForm, AnnounceForm, WorkForm
+from .forms import ClassroomForm, AnnounceForm, WorkForm, ScoreForm
 from django.http import JsonResponse
 import StringIO
 from datetime import datetime
@@ -18,6 +18,7 @@ import xlsxwriter
 from django.utils.timezone import localtime
 from django.utils import timezone
 from django.http import HttpResponse
+from account.avatar import *
 
 
 # 判斷是否為授課教師
@@ -455,3 +456,113 @@ def work_class(request, classroom_id, work_id):
         log.save()          
     return render_to_response('teacher/work_class.html',{'classmate_work': classmate_work, 'classroom_id':classroom_id, 'index': work_id}, context_instance=RequestContext(request))
 	
+	# 教師評分
+def scoring(request, classroom_id, user_id, index):
+    user = User.objects.get(id=user_id)
+    enroll = Enroll.objects.get(classroom_id=classroom_id, student_id=user_id)
+    try:
+        assistant = Assistant.objects.filter(classroom_id=classroom_id,lesson=index,student_id=request.user.id)
+    except ObjectDoesNotExist:            
+        if not is_teacher(request.user, classroom_id):
+            return render_to_response('message.html', {'message':"您沒有權限"}, context_instance=RequestContext(request))
+        
+    try:
+        work3 = SWork.objects.get(student_id=user_id, index=index)
+    except ObjectDoesNotExist:
+        work3 = SWork(index=index, student_id=user_id)
+        
+    if request.method == 'POST':
+        form = ScoreForm(request.user, request.POST)
+        if form.is_valid():
+            work = SWork.objects.filter(index=index, student_id=user_id)
+            if not work.exists():
+                work = SWork(index=index, student_id=user_id, score=form.cleaned_data['score'], publication_date=timezone.now())
+                work.save()
+                # 記錄系統事件
+                if is_event_open() :            
+                    log = Log(user_id=request.user.id, event=u'新增評分<'+user.first_name+'><'+work.score+'分>')
+                    log.save()                      
+            else:
+                if work[0].score < 0 :   
+                    # 小老師
+                    if not is_teacher(request.user, classroom_id):
+    	                # credit
+                        update_avatar(request.user.id, 2, 1)
+                        # History
+                        history = PointHistory(user_id=request.user.id, kind=2, message='1分--小老師:<'+index.encode('utf-8')+'><'+enroll.student.first_name.encode('utf-8')+'>', url=request.get_full_path())
+                        history.save()				
+    
+				    # credit
+                    update_avatar(enroll.student_id, 1, 1)
+                    # History
+                    history = PointHistory(user_id=user_id, kind=1, message='1分--作業受評<'+index.encode('utf-8')+'><'+request.user.first_name.encode('utf-8')+'>', url=request.get_full_path())
+                    history.save()		                        
+                
+                work.update(score=form.cleaned_data['score'])
+                work.update(scorer=request.user.id)
+                # 記錄系統事件
+                if is_event_open(request) :                   
+                    log = Log(user_id=request.user.id, event=u'更新評分<'+user.first_name+u'><'+str(work[0].score)+u'分>')
+                    log.save()                    
+						
+            if is_teacher(request.user, classroom_id):         
+                if form.cleaned_data['assistant']:
+                    try :
+					    assistant = Assistant.objects.get(student_id=user_id, classroom_id=classroom_id, lesson=index)
+                    except ObjectDoesNotExist:
+                        assistant = Assistant(student_id=user_id, classroom_id=classroom_id, lesson=index)
+                        assistant.save()	
+                        
+                    # create Message
+                    title = "<" + assistant.student.first_name.encode("utf-8") + u">擔任小老師<".encode("utf-8") + index.encode('utf-8') + ">"
+                    url = "/teacher/score_peer/" + str(index) + "/" + classroom_id + "/" + str(enroll.group) 
+                    message = Message.create(title=title, url=url, time=timezone.now())
+                    message.save()                        
+                    
+                    group = Enroll.objects.get(classroom_id=classroom_id, student_id=assistant.student_id).group
+                    if group > 0 :
+                        enrolls = Enroll.objects.filter(group = group)
+                        for enroll in enrolls:
+                            # message for group member
+                            messagepoll = MessagePoll.create(message_id = message.id,reader_id=enroll.student_id)
+                            messagepoll.save()
+                    
+                return redirect('/teacher/work/class/'+classroom_id+'/'+index)
+            else: 
+                return redirect('/teacher/score_peer/'+index+'/'+classroom_id+'/'+str(enroll.group))
+
+    else:
+        work = SWork.objects.filter(index=index, student_id=user_id)
+        if not work.exists():
+            form = ScoreForm(user=request.user)
+        else:
+            form = ScoreForm(instance=work[0], user=request.user)
+    return render_to_response('teacher/scoring.html', {'form': form,'work':work3, 'student':user, 'classroom_id':classroom_id}, context_instance=RequestContext(request))
+
+# 小老師評分名單
+def score_peer(request, index, classroom_id, group):
+    try:
+        assistant = Assistant.objects.get(lesson=index, classroom_id=classroom_id, student_id=request.user.id)
+    except ObjectDoesNotExist:
+        return redirect("/student/group/work/"+index+"/"+classroom_id)
+
+    enrolls = Enroll.objects.filter(classroom_id=classroom_id, group=group)
+    lesson = ""
+    classmate_work = []
+    for enroll in enrolls:
+        if not enroll.student_id == request.user.id : 
+            scorer_name = ""
+            try:    
+                work = Work.objects.get(user_id=enroll.student.id, index=index)
+                if work.scorer > 0 :
+                    scorer = User.objects.get(id=work.scorer)
+                    scorer_name = scorer.first_name
+            except ObjectDoesNotExist:
+                work = Work(index=index, user_id=1, number="0")        
+            classmate_work.append([enroll.student,work,1, scorer_name])
+        lesson = lesson_list[int(index)-1]
+    # 記錄系統事件
+    if is_event_open(request) :        
+        log = Log(user_id=request.user.id, event=u'小老師評分名單<'+index+'><'+group+'>')
+        log.save()    
+    return render_to_response('teacher/score_peer.html',{'enrolls':enrolls, 'classmate_work': classmate_work, 'classroom_id':classroom_id, 'lesson':lesson, 'index': index}, context_instance=RequestContext(request))

@@ -25,4 +25,7 @@ urlpatterns = [
     url(r'^work/add/(?P<classroom_id>\d+)/$', login_required(WorkCreateView.as_view()), name='work-add'),
     url(r'^work/edit/(?P<classroom_id>\d+)/$', views.work_edit, name='work-edit'),  
     url(r'^work/class/(?P<classroom_id>\d+)/(?P<work_id>\d+)/$', views.work_class, name='work-class'),    
+    #評分
+    url(r'^score_peer/(?P<index>\d+)/(?P<classroom_id>\d+)/(?P<group>\d+)/$', views.score_peer),     
+    url(r'^scoring/(?P<classroom_id>[^/]+)/(?P<user_id>\d+)/(?P<index>\d+)/$', views.scoring), 
 ]

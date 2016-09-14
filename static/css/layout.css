@@ -27,6 +27,11 @@ a{outline:none; text-decoration:none;}
 
 code{font-weight:normal; font-style:normal; font-family:Georgia, "Times New Roman", Times, serif;}
 
+textarea {
+   font-family: "Courier New", Courier, monospace;
+   font-size: inherit;
+}
+
 .fl_left, .imgl{float:left;}
 .fl_right, .imgr{float:right;}
 
@@ -47,7 +52,7 @@ div.wrapper{display:block; width:960px; margin:0 auto; padding:0; text-align:lef
 .row3{color:#747474; background-color:#FFFFFF;}
 .row3 a{color:#166b32;}
 .row4{color:#999999; background-color:#202020;}
-.row4 a{color:#166b32; background-color:#202020;}
+.row4 a{color:#76C38F; background-color:#202020;}
 .row5, .row5 a{color:#999999; background-color:#202020;}
 
 /* ----------------------------------------------Generalise------------------------------------- */
