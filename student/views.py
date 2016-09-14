@@ -353,8 +353,12 @@ def submit(request, index):
         return render_to_response('student/submit.html', {'form':form, 'scores':scores, 'index':index}, context_instance=RequestContext(request))
 
 def show(request, index):
+    work = []
+    try:
         work = SWork.objects.get(index=index, student_id=request.user.id)
-        return render_to_response('student/show.html', {'work':work}, context_instance=RequestContext(request))
+    except ObjectDoesNotExist:
+        pass
+    return render_to_response('student/show.html', {'work':work}, context_instance=RequestContext(request))
 
       
 # 查詢某作業所有同學心得

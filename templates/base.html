@@ -19,19 +19,17 @@ Licence URI: http://www.os-templates.com/template-terms
 <div class="wrapper row1">
   <header id="header" class="clear">
     <div id="hgroup">
-      <h1><a href="index.html">L<span>earn Python</span></a></h1>
+      <h1><a href="/">L<span>earn Python</span></a></h1>
       <h2>授課教師<br>
         高慧君</h2>
     </div>
-		<!--
-    <form action="#" method="post">
+		<form action="#" method="post">
       <fieldset>
-        <legend>Search:</legend>
-        <input type="text" value="Search Our Website&hellip;" placeholder="Search Our Website&hellip;">
-        <input type="submit" id="sf_submit" value="submit">
+ 		{% if user.is_authenticated %}				
+				<a href="/account/avatar/"><img src="/static/avatar/s{{ user.profile.avatar }}.png"></a> <strong>{{user.first_name}}</strong>
+		{% endif %}
       </fieldset>
-    </form>
-    -->
+    </form>    
   </header>
 </div>
 <div class="wrapper row2">
@@ -50,6 +48,7 @@ Licence URI: http://www.os-templates.com/template-terms
         -->
       </li>
       <li><a href="/account">訊息{% if request.user.id|unread > 0 %}({{request.user.id|unread}}){% endif %}</a></li>
+			<li><a href="/account/profile/{{user.id}}">個人檔案</a></li>			
       <li>{% if user|event %}
 		    <a href="/account/event/{{user.id}}">事件</a>
 			{% endif %}

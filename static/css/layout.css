@@ -16,7 +16,7 @@ File: Layout CSS
 @import url("portfolio.css");
 
 html{overflow-y:scroll;}
-body{margin:0; padding:0; font-size:13px; font-family:Georgia, "Times New Roman", Times, serif; color:#999999; background-color:#202020;}
+body{margin:0; padding:0; font-size:16px; font-family:Georgia, "Times New Roman", Times, serif; color:#999999; background-color:#202020;}
 
 .clear::after{content:"."; display:block; height:0; clear:both; visibility:hidden; line-height:0;}
 .clear{display:block; clear:both;}
@@ -42,12 +42,12 @@ address, article, aside, figcaption, figure, footer, header, nav, section{displa
 /* ----------------------------------------------Wrapper------------------------------------- */
 
 div.wrapper{display:block; width:960px; margin:0 auto; padding:0; text-align:left;}
-.row1{color:#989898; background-color:#FFFFFF; border-top:5px solid #76C38F;}
-.row2{color:#FFFFFF; background-color:#76C38F;}
+.row1{color:#989898; background-color:#FFFFFF; border-top:5px solid #166b32;}
+.row2{color:#FFFFFF; background-color:#166b32;}
 .row3{color:#747474; background-color:#FFFFFF;}
-.row3 a{color:#76C38F; background-color:#FFFFFF;}
+.row3 a{color:#166b32;}
 .row4{color:#999999; background-color:#202020;}
-.row4 a{color:#76C38F; background-color:#202020;}
+.row4 a{color:#166b32; background-color:#202020;}
 .row5, .row5 a{color:#999999; background-color:#202020;}
 
 /* ----------------------------------------------Generalise------------------------------------- */
@@ -60,8 +60,8 @@ h1, h2, h3, h4, h5, h6{margin:0; padding:0; font-size:18px; font-weight:normal; 
 address{font-style:normal;}
 
 blockquote, q{display:block; padding:8px 10px; color:#979797; background-color:#ECECEC; font-style:italic; line-height:normal;}
-blockquote::before, q::before{content:'“ '; font-size:26px;}
-blockquote::after, q::after{content:' „'; font-size:26px; line-height:0;}
+blockquote::before, q::before{content:'ï¿½ '; font-size:26px;}
+blockquote::after, q::after{content:' ï¿½'; font-size:26px; line-height:0;}
 
 .one_quarter, .two_quarter, .three_quarter{display:block; float:left; margin:0 0 0 20px;}
 .one_quarter{width:210px;}
@@ -100,9 +100,9 @@ blockquote::after, q::after{content:' „'; font-size:26px; line-height:0;}
 #comments ul{margin:0 0 40px 0; padding:0; list-style:none;}
 #comments li.comment_odd, #comments li.comment_even{margin:0 0 10px 0; padding:15px; list-style:none;}
 #comments li.comment_odd{color:#666666; background-color:#F7F7F7;}
-#comments li.comment_odd a{color:#76C38F; background-color:#F7F7F7;}
+#comments li.comment_odd a{color:#166b32; background-color:#F7F7F7;}
 #comments li.comment_even{color:#666666; background-color:#E8E8E8;}
-#comments li.comment_even a{color:#76C38F; background-color:#E8E8E8;}
+#comments li.comment_even a{color:#166b32; background-color:#E8E8E8;}
 #comments article, #comments header{display:block; width:100%;}
 #comments figure{float:right; margin:0 0 10px 10px; padding:3px; border:1px solid #DEDACB; text-align:center;}
 #comments figure img{float:inherit;}

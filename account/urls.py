@@ -34,6 +34,8 @@ urlpatterns = [
     url(r'^event/(?P<user_id>\d+)/$', views.EventListView.as_view()),
     url(r'^event/admin/$', views.EventAdminListView.as_view()),
     url(r'^event/admin/classroom/(?P<classroom_id>\d+)/$', views.EventAdminClassroomListView.as_view()),  
+    #個人檔案
+    url(r'^profile/(?P<user_id>\d+)/$', views.profile),    
     #修改真實姓名
     url(r'^realname/(?P<user_id>\d+)/$', views.adminrealname),    
     url(r'^realname/$', views.realname, name='realname'), 
@@ -41,4 +43,6 @@ urlpatterns = [
     url(r'^school/$', views.adminschool),     
     #修改信箱
     url(r'^email/$', views.adminemail),      
+    # 列所出有圖像
+    url(r'^avatar/$', views.avatar),    
 ]

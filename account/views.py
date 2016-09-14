@@ -440,7 +440,7 @@ def adminschool(request):
         user = User.objects.get(id=request.user.id)
         form = SchoolForm(instance=user)
 
-    return render_to_response('account/school.html',{'form': form}, context_instance=RequestContext(request))
+    return render_to_response('form.html',{'form': form}, context_instance=RequestContext(request))
     
 # 修改信箱
 def adminemail(request):
@@ -459,7 +459,8 @@ def adminemail(request):
         user = User.objects.get(id=request.user.id)
         form = EmailForm(instance=user)
 
-    return render_to_response('account/email.html',{'form': form}, context_instance=RequestContext(request))    
+    return render_to_response('form.html',{'form': form}, context_instance=RequestContext(request))    
+	
 # 記錄系統事件
 class EventListView(ListView):
     context_object_name = 'events'
@@ -554,4 +555,37 @@ class EventAdminClassroomListView(ListView):
         if not self.request.user.id == 1:
             return redirect('/')
         return super(EventAdminClassroomListView, self).render_to_response(context)     
+
+# 顯示個人檔案
+def profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    enrolls = Enroll.objects.filter(student_id=user_id)
+    try: 
+        profile = Profile.objects.get(user=user)
+    except ObjectDoesNotExist:
+        profile = Profile(user=user)
+        profile.save()
+
+    # 計算積分    
+    credit = profile.work + profile.assistant + profile.debug + profile.creative
+    # 記錄系統事件
+    if is_event_open(request) :       
+        log = Log(user_id=request.user.id, event='查看個人檔案')
+        log.save()        
         
+    #檢查是否為教師或同班同學
+    user_enrolls = Enroll.objects.filter(student_id=request.user.id)
+    for enroll in user_enrolls:
+        if is_classmate(user_id, enroll.classroom_id) or request.user.id == 1:
+          return render_to_response('account/profile.html',{'enrolls':enrolls, 'profile': profile,'user_id':user_id, 'credit':credit}, context_instance=RequestContext(request))	
+    if user_id == str(request.user.id):	
+        return render_to_response('account/profile.html',{'enrolls':enrolls, 'profile': profile,'user_id':user_id, 'credit':credit}, context_instance=RequestContext(request))	
+    return redirect("/")
+	
+def avatar(request):
+    profile = Profile.objects.get(user = request.user)
+    # 記錄系統事件
+    if is_event_open(request) :       
+        log = Log(user_id=request.user.id, event=u'查看個人圖像')
+        log.save()        
+    return render_to_response('account/avatar.html', {'avatar':profile.avatar}, context_instance=RequestContext(request))

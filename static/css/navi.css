@@ -17,10 +17,10 @@ nav ul{margin:0; padding:0; list-style:none;}
 #topnav ul li{display:inline-block; margin-left:25px; text-transform:uppercase;}
 #topnav ul li:first-child{margin-left:0;}
 #topnav ul li li{margin:0; text-align:left; font-style:normal;}
-#topnav ul li a:link, #topnav ul li a:visited, #topnav ul li a:hover{display:block; margin:0; padding:0; color:#FFFFFF; background-color:#76C38F;}
-#topnav ul li a:hover, #topnav ul li.active a{color:#000000; background-color:#76C38F;}
-#topnav ul li ul li a:link, #topnav ul li ul li a:visited{width:150px; float:none; margin:0; padding:7px 10px; text-transform:none; font-weight:normal; color:#FFFFFF; background-color:#76C38F; border:none;}
-#topnav ul li ul li a:hover{color:#000000; background-color:#76C38F; border:none;}
+#topnav ul li a:link, #topnav ul li a:visited, #topnav ul li a:hover{display:block; margin:0; padding:0; color:#FFFFFF; background-color:#166b32;}
+#topnav ul li a:hover, #topnav ul li.active a{color:#000000; background-color:#166b32;}
+#topnav ul li ul li a:link, #topnav ul li ul li a:visited{width:150px; float:none; margin:0; padding:7px 10px; text-transform:none; font-weight:normal; color:#FFFFFF; background-color:#166b32; border:none;}
+#topnav ul li ul li a:hover{color:#000000; background-color:#166b32; border:none;}
 #topnav ul ul{z-index:9999; position:absolute; left:-999em; height:auto; width:170px; padding:5px 0 0 0; border-bottom:1px solid #D5D5D5;}
 #topnav ul ul a{width:140px;}
 #topnav ul li:hover ul{left:auto;}
@@ -33,7 +33,7 @@ nav ul{margin:0; padding:0; list-style:none;}
 #container aside nav li{margin:0 0 3px 0; padding:0;}
 #container aside nav ul ul, #container aside nav ul ul ul, #container aside nav ul ul ul ul, #container aside nav ul ul ul ul ul{border-top:none; padding-top:0;}
 #container aside nav a{display:block; margin:0; padding:5px 10px 5px 20px; color:#666666; background:url("images/green_file.gif") no-repeat 10px center #FFFFFF; text-decoration:none; border-bottom:1px dotted #666666;}
-#container aside nav a:hover{color:#76C38F; background-color:#FFFFFF;}
+#container aside nav a:hover{color:#166b32; background-color:#FFFFFF;}
 #container aside nav ul ul a, #container aside nav ul ul ul a, #container aside nav ul ul ul ul a, #container aside nav ul ul ul ul ul a{background:url("images/black_file.gif") no-repeat #FFFFFF;}
 #container aside nav ul ul a{padding-left:40px; background-position:30px center;}
 #container aside nav ul ul ul a{padding-left:50px; background-position:40px center;}
