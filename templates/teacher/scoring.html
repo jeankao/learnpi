@@ -7,10 +7,10 @@
         {{work.memo}}
         <br>
         <font color=black>程式碼：</font><BR>
-        {{work.code}}
+        <pre>{{work.code}}</pre>
         <br>
         <font color=black>執行結果：</font><BR>
-        <img src="/static/pic/{{request.user.id}}/{{work.id}}/run.jpg">
+        <img width=880 src="/static/pic/{{student.id}}/{{work.id}}/run.jpg">
         <form action="" enctype="multipart/form-data"  method="post">
             <table>
                 {{ form.as_table }}
