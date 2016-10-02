@@ -61,19 +61,63 @@ Lesson01<BR>
 <section class="tabwrapper">
   <h1>第1堂課</h1>
   <ul class="tabs">
-    <li><a href="#tab1">影片</a></li>
-    <li><a href="#tab2">講義</a></li>
+    <li><a href="#tab1">講義</a></li>    
+    <li><a href="#tab2">影片</a></li>
   </ul>  
   <div class="clr"></div>  
   <section class="block">
     <article id="tab1">
+{% include "student/lesson/A01.html" %}
+    </article>    
+    <article id="tab2">
         <BR>
 <iframe width="880" height="520" src="https://www.youtube.com/embed/nRSXbfF4BoQ?autoplay=0&autostart=0&enablejsapi=1" frameborder="0" allowfullscreen></iframe>   
    </article>
-    <article id="tab2">
-{% include "student/lesson/A01.html" %}
-    </article>
   </section>
 </section>
-{% endif %}
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+{% elif lesson == "B01" %}
+Lesson01<BR>
+<section class="tabwrapper">
+  <h1>第1堂課</h1>
+  <ul class="tabs">
+    <li><a href="#tab1">講義</a></li>
+    <!--
+    <li><a href="#tab2">影片</a></li>
+    -->    
+  </ul>  
+  <div class="clr"></div>  
+  <section class="block">
+    <article id="tab1">
+{% include "student/lesson/B01.html" %}
+    </article>    
+    <article id="tab2">
+        <BR>
+<iframe width="880" height="520" src="https://www.youtube.com/embed/nRSXbfF4BoQ?autoplay=0&autostart=0&enablejsapi=1" frameborder="0" allowfullscreen></iframe>   
+   </article>
+  </section>
+</section>
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->  
+{% elif lesson == "B02" %}
+Lesson01<BR>
+<section class="tabwrapper">
+  <h1>第2堂課</h1>
+  <ul class="tabs">
+    <li><a href="#tab1">講義</a></li>
+    <!--
+    <li><a href="#tab2">影片</a></li>
+    -->
+  </ul>  
+  <div class="clr"></div>  
+  <section class="block">
+    <article id="tab1">
+{% include "student/lesson/B02.html" %}
+    </article>    
+    <article id="tab2">
+        <BR>
+<iframe width="880" height="520" src="https://www.youtube.com/embed/nRSXbfF4BoQ?autoplay=0&autostart=0&enablejsapi=1" frameborder="0" allowfullscreen></iframe>   
+   </article>
+  </section>
+</section>
+  {% endif %}  
 {% endblock %}

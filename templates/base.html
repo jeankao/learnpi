@@ -15,8 +15,27 @@ Licence URI: http://www.os-templates.com/template-terms
 <link rel="stylesheet" href="/static/css/pygments.css" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 {% block head_ext %}{% endblock %}	
+<style>
+.scrollToTop{
+	width:80px; 
+	height:80px;
+	padding:1px; 
+	text-align:left; 
+	color: #FFF;
+	text-decoration: none;
+	position:fixed;
+	bottom:0px;
+	right:10px;
+	display:none;
+	background: url('/static/images/up.png') no-repeat 0px 20px;
+}
+.scrollToTop:hover{
+	text-decoration:none;
+}	
+</style>
 </head>
 <body>
+<a href="#" class="scrollToTop">回上方</a>	
 <div class="wrapper row1">
   <header id="header" class="clear">
     <div id="hgroup">
@@ -240,6 +259,19 @@ Licence URI: http://www.os-templates.com/template-terms
   });
  
   $(document).ready(function(){
+		$(window).scroll(function(){
+			if ($(this).scrollTop() > 100) {
+				$('.scrollToTop').fadeIn();
+			} else {
+				$('.scrollToTop').fadeOut();
+			}
+		});
+
+		//Click event to scroll to top
+		$('.scrollToTop').click(function(){
+			$('html, body').animate({scrollTop : 0},800);
+			return false;
+		});		
     //$('main').css('padding-top', $('.row0').height()+15+'px');
     {% block domready %}
     {% endblock %}
