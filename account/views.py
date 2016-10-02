@@ -49,6 +49,8 @@ def homepage(request):
     try :
         admin_user = User.objects.get(id=1)
         admin_profile = Profile.objects.get(user=admin_user)
+        admin_profile.visitor_count = admin_profile.visitor_count + 1
+        admin_profile.save()
     except ObjectDoesNotExist:
         admin_profile = ""
     return render_to_response('homepage.html', {'row_count':row_count, 'user_count':len(users), 'admin_profile': admin_profile}, context_instance=RequestContext(request))
@@ -91,7 +93,7 @@ def user_login(request):
                                         except ObjectDoesNotExist:
                                             profile = Profile(user=admin_user)
                                             profile.save()
-                                        profile.visitor_count = profile.visitor_count + 1
+                                        profile.login_count = profile.login_count + 1
                                         profile.save()
                                         
                                         year = localtime(timezone.now()).year

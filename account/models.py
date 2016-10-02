@@ -22,6 +22,8 @@ class Profile(models.Model):
 	avatar = models.IntegerField(default=0)
 	# 訪客人次
 	visitor_count = models.IntegerField(default=0)
+	# 登入人次
+	login_count = models.IntegerField(default=0)
 	# 開站時間
 	open_time = models.DateTimeField(auto_now_add=True)
   
