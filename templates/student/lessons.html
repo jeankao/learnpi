@@ -1,20 +1,65 @@
 {% extends "base.html" %}
 {% block title %} Lessons {% endblock %}
-{% load tag %}
+{% block head_ext %}
+<SCRIPT language=JavaScript>
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v3.0
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</SCRIPT>
+{% endblock %}
+
 {% block content %}
 {% if unit == "A" %}
-Turtle畫圖
+<img src="/static/images/turtle.png">
 <br>
-<a href="/student/lesson/A01">Lesson01</a><BR>
-<a href="/student/lesson/A02">Lesson02</a><BR>
-<a href="/student/lesson/A03">Lesson03</a><BR>
-<a href="/student/lesson/A04">Lesson04</a><BR>
+　　<a onmouseover="MM_swapImage('menu01','','/static/images/turtle012.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/A01"><img name=menu01 src="/static/images/turtle01.png"></a>
+　　<a onmouseover="MM_swapImage('menu02','','/static/images/turtle022.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/A02"><img name=menu02 src="/static/images/turtle02.png"></a>
+　　<a onmouseover="MM_swapImage('menu03','','/static/images/turtle032.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/A03"><img name=menu03 src="/static/images/turtle03.png"></a> 
+<br><BR>
+　　<a onmouseover="MM_swapImage('menu04','','/static/images/turtle042.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/A04"><img name=menu04 src="/static/images/turtle04.png"></a>
+　　<a onmouseover="MM_swapImage('menu05','','/static/images/turtle052.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/A05"><img name=menu05 src="/static/images/turtle05.png"></a>
+　　<a onmouseover="MM_swapImage('menu06','','/static/images/turtle062.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/A06"><img name=menu06 src="/static/images/turtle06.png"></a> 
+<br><BR>
+　　<a onmouseover="MM_swapImage('menu07','','/static/images/turtle072.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/A07"><img name=menu07 src="/static/images/turtle07.png"></a>
+　　<a onmouseover="MM_swapImage('menu08','','/static/images/turtle082.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/A08"><img name=menu08 src="/static/images/turtle08.png"></a>
+　　<a onmouseover="MM_swapImage('menu09','','/static/images/turtle092.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/A09"><img name=menu09 src="/static/images/turtle09.png"></a> 
+<br>
 {% elif unit == "B" %}
 物理模擬
 <BR>
-<a href="/student/lesson/B01">Lesson01</a><BR>
-<a href="/student/lesson/B02">Lesson02</a><BR>
-<a href="/student/lesson/B03">Lesson03</a><BR>
-<a href="/student/lesson/B04">Lesson04</a><BR>
+<table>
+  <tr>
+  <td>
+<a onmouseover="MM_swapImage('menu01','','/static/images/physics012.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/B01"><img name=menu01 src="/static/images/physics01.png"></a><br><br>
+<a onmouseover="MM_swapImage('menu03','','/static/images/physics032.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/B03"><img name=menu03 src="/static/images/physics03.png"></a><br><br>
+  </td>
+  <td>
+<a onmouseover="MM_swapImage('menu02','','/static/images/physics022.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/B02"><img name=menu02 src="/static/images/physics02.png"></a><br><br>
+<a onmouseover="MM_swapImage('menu04','','/static/images/physics042.png',1);" onmouseout=MM_swapImgRestore() href="/student/lesson/B04"><img name=menu04 src="/static/images/physics04.png"></a><br><br>
+    </td>
+  </tr>
+  </table>
+<br><BR>  
+
 {%endif%}  
 {% endblock %}
