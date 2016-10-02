@@ -2,6 +2,27 @@
 {% block title %} Welcome ! {% endblock %}
 {% block content %}
 
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s">cube = box(pos=(0, 0, 0), length=0.05, height=0.05, width=0.05)</span><span class="p">,</span>
+        <span class="s">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+        <span class="s">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+        <span class="s">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+        <span class="s">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+        <span class="s">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+<span class="hll">        <span class="s">&#39;web&#39;</span><span class="p">,</span>
+</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+
+
 		<BR>使用者登入次數：{{admin_profile.visitor_count}}次</BR>		
 		<BR>註冊使用者：{{user_count}}人</BR>
 		<BR>資料庫記錄：共{{row_count}}筆</BR>

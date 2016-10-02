@@ -14,3 +14,35 @@ table tbody td{vertical-align:top; border-collapse:collapse; border-left:1px sol
 table thead th, table tbody td{padding:5px; border-collapse:collapse;}
 table tbody tr:nth-child(odd){color:#666666; background-color:#F7F7F7;}
 table tbody tr:nth-child(even){color:#666666; background-color:#E8E8E8;}
+
+table.highlighttable{width:100%; border-collapse:collapse; table-layout:auto; vertical-align:top; margin-bottom:0px;border:0px;}
+td.linenos {
+    text-align: right;
+    border:0px;
+    background-color: white;
+}
+td.code {  
+    background-color: #eeffcc; 
+    border:1px solid #CCCCCC;  
+}
+
+pre {
+    font-family: 'Consolas', 'Deja Vu Sans Mono',
+                 'Bitstream Vera Sans Mono', monospace;
+    font-size: 0.95em;
+    letter-spacing: 0.015em;
+    line-height: 120%;
+    padding: 0.5em;
+    background-color: transparent;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+pre a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+td.linenos pre {
+    padding: 0.5em 0;
+}

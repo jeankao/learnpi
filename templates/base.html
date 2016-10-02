@@ -12,6 +12,7 @@ Licence URI: http://www.os-templates.com/template-terms
 <title>Learn Python</title>
 <meta charset="iso-8859-1">
 <link rel="stylesheet" href="/static/css/layout.css" type="text/css">
+<link rel="stylesheet" href="/static/css/pygments.css" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 {% block head_ext %}{% endblock %}	
 </head>
@@ -20,8 +21,8 @@ Licence URI: http://www.os-templates.com/template-terms
   <header id="header" class="clear">
     <div id="hgroup">
       <h1><a href="/">L<span>earn Python</span></a></h1>
-      <h2>授課教師<br>
-        高慧君</h2>
+      <h2>玩遊戲、架網站、學物理<br>
+        高慧君老師製作</h2>
     </div>
 		<form action="#" method="post">
       <fieldset>
@@ -36,15 +37,15 @@ Licence URI: http://www.os-templates.com/template-terms
   <nav id="topnav">
     <ul class="clear">
 			<li><a class="active" href="/">Home</a></li>
-			<li><a href="https://jeankao.gitbooks.io/python/content/" target=_blank>課程</a></li>
+			<li><a href="https://jeankao.gitbooks.io/python/content/" target=_blank>課程</a>
+			    <ul>
+          <li><a href="/student/lessons/A">Turtle畫圖</a></li>
+          <li><a href="/student/lessons/B">物理模擬</a></li>
+        </ul>
+		</li>		
  		{% if user.is_authenticated %}
       <li><a href="/student/classroom">班級</a>
 				<!--
-        <ul>
-          <li><a href="#">Drop Link 1</a></li>
-          <li><a href="#">Drop Link 2</a></li>
-          <li><a href="#">Drop Link 3</a></li>
-        </ul>
         -->
       </li>
       <li><a href="/account">訊息{% if request.user.id|unread > 0 %}({{request.user.id|unread}}){% endif %}</a></li>

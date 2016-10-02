@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %} Teachers {% endblock %}
+{% block head_ext %}
+<style class="cp-pen-styles">
+.tabwrapper {
+  margin: auto;
+  padding: 1em;
+  width: 4900px;
+}
+ul.tabs {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul.tabs li {
+  border: gray solid 1px;
+  border-bottom: none;
+  float: left;
+  margin: 0 .25em 0 0;
+  padding: .25em .5em;
+}
+ul.tabs li a {
+  color: gray;
+  font-weight: bold;
+  text-decoration: none;
+}
+ul.tabs li.active {
+  background: gray;
+}
+ul.tabs li.active a {
+  color: white;
+}
+.clr {
+  clear: both;
+}
+article {
+  border-top: gray solid 1px;
+  padding: 0 1em;
+}</style>
+<script>
+$(function () {
+    $('ul.tabs li:first').addClass('active');
+    $('.block article').hide();
+    $('.block article:first').show();
+    $('ul.tabs li').on('click', function () {
+        $('ul.tabs li').removeClass('active');
+        $(this).addClass('active');
+        $('.block article').hide();
+        var activeTab = $(this).find('a').attr('href');
+        $(activeTab).show();
+        return false;
+    });
+});
+//# sourceURL=pen.js
+</script>
+{% endblock %}
+{% block content %}
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+{% if lesson == "A01" %}
+Lesson01<BR>
+<section class="tabwrapper">
+  <h1>第1堂課</h1>
+  <ul class="tabs">
+    <li><a href="#tab1">影片</a></li>
+    <li><a href="#tab2">講義</a></li>
+  </ul>  
+  <div class="clr"></div>  
+  <section class="block">
+    <article id="tab1">
+        <BR>
+<iframe width="880" height="520" src="https://www.youtube.com/embed/nRSXbfF4BoQ?autoplay=0&autostart=0&enablejsapi=1" frameborder="0" allowfullscreen></iframe>   
+   </article>
+    <article id="tab2">
+{% include "student/lesson/A01.html" %}
+    </article>
+  </section>
+</section>
+{% endif %}
+{% endblock %}

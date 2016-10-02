@@ -379,3 +379,16 @@ def memo(request, classroom_id, index):
         log = Log(user_id=request.user.id, event=u'查看某作業所有同學心得<'+index+'>')
         log.save()    
     return render_to_response('student/memo.html', {'datas': datas}, context_instance=RequestContext(request))
+	
+# 四種課程    
+def lessons(request, unit):
+        # 記錄系統事件 
+        if is_event_open(request):          
+            log = Log(user_id=request.user.id, event=u'查看課程頁面<'+unit+'>')             
+            log.save()         
+        return render_to_response('student/lessons.html', {'unit': unit}, context_instance=RequestContext(request))
+
+# 課程內容
+def lesson(request, lesson):
+        return render_to_response('student/lesson.html', {'lesson':lesson}, context_instance=RequestContext(request))
+    

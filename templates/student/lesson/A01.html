@@ -1,0 +1,132 @@
+<BR>
+<h1>
+  第一個turtle程式
+</h1>
+ 
+ <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># -*- coding: utf8 -*-</span>
+<span class="kn">import</span> <span class="nn">turtle</span>             <span class="c"># 匯入turtle套件，允許我們使用turtle指令</span>
+<span class="n">window</span> <span class="o">=</span> <span class="n">turtle</span><span class="o">.</span><span class="n">Screen</span><span class="p">()</span>  <span class="c"># 產生畫布以進行畫圖</span>
+<span class="n">john</span> <span class="o">=</span> <span class="n">turtle</span><span class="o">.</span><span class="n">Turtle</span><span class="p">()</span>    <span class="c"># 建立一個海龜turtle，它的名字叫john</span>
+
+<span class="n">john</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>          <span class="c"># 告訴海龜往前走50個單位</span>
+<span class="n">john</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>             <span class="c"># 告訴海龜左轉90度</span>
+<span class="n">john</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>          <span class="c"># 告訴海龜往前走30個單位</span>
+
+<span class="n">window</span><span class="o">.</span><span class="n">exitonclick</span><span class="p">()</span>      <span class="c"># 等待使用者關閉視窗</span>
+</pre></div>
+</td></tr></table></div>
+<BR>
+<img src="/static/lesson/L2_01.png">
+<br>
+練習：請你修改上面的程式，畫出一個長方形
+<br>
+<img src="/static/lesson/L2_02.png">
+<br>
+<BR>
+<h1>
+(2)多隻海龜畫圖  
+</h1>
+
+Python是物件導向程式，我們可以在程式中產生多個物件實體(instance)，每個物件實體有自己的屬性和方法。<BR>
+我們要建立一隻叫做john的海龜，讓它畫出黑色細線，另外再建立一隻叫做marry的海龜，讓它畫出粉紅粗線。<BR>
+  
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># -*- coding: utf8 -*-</span>
+<span class="kn">import</span> <span class="nn">turtle</span>                   <span class="c"># 匯入turtle套件，允許我們使用turtle指令</span>
+<span class="n">window</span> <span class="o">=</span> <span class="n">turtle</span><span class="o">.</span><span class="n">Screen</span><span class="p">()</span>        <span class="c"># 產生畫布以進行畫圖</span>
+<span class="n">window</span><span class="o">.</span><span class="n">bgcolor</span><span class="p">(</span><span class="s">&quot;lightgreen&quot;</span><span class="p">)</span>    <span class="c"># 設定畫布底色為淺綠色</span>
+
+<span class="n">marry</span> <span class="o">=</span> <span class="n">turtle</span><span class="o">.</span><span class="n">Turtle</span><span class="p">()</span>         <span class="c"># 建立一個海龜turtle，它的名字叫marry</span>
+<span class="n">marry</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s">&quot;hotpink&quot;</span><span class="p">)</span>          <span class="c"># 設定畫筆顏色為粉紅色</span>
+<span class="n">marry</span><span class="o">.</span><span class="n">pensize</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                <span class="c"># 設定畫筆粗細為5個像素</span>
+
+<span class="n">marry</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>               <span class="c"># 告訴海龜往前走80個單位</span>
+<span class="n">marry</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>                 <span class="c"># 告訴海龜左轉120度</span>
+<span class="n">marry</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">marry</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">marry</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">marry</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
+
+<span class="n">john</span> <span class="o">=</span> <span class="n">turtle</span><span class="o">.</span><span class="n">Turtle</span><span class="p">()</span>          <span class="c"># 建立一個海龜turtle，它的名字叫john</span>
+<span class="n">john</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>                <span class="c"># 告訴海龜往前走50個單位</span>
+<span class="n">john</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>                   <span class="c"># 告訴海龜左轉90度</span>
+<span class="n">john</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">john</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">john</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">john</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">john</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">john</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="n">window</span><span class="o">.</span><span class="n">exitonclick</span><span class="p">()</span>            <span class="c"># 等待使用者關閉視窗</span>
+</pre></div>
+</td></tr></table></div>
+  
+<br>
+<img src="/static/lesson/L2_03.png">
+<BR>
+<BR>
+<h1>
+(3)for迴圈  
+  </h1>
+在上面畫正方形的程式碼中，有沒有發現程式重複出現呢?我們可以用for迴圈來精簡程式碼。<BR>  
+  
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="n">john</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">john</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+
+<br>
+[0,1,2,3]是一個串列，你也可以使用range(4)產生這個串列。所以上面的程式碼可以寫成：<BR>
+  
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">john</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">john</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+  
+<Br>
+<BR>
+<h1>
+  作業：
+  </h1>
+請使用for迴圈畫一個星星。<BR>
+<img src="/static/lesson/L2_06.png">  
