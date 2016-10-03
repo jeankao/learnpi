@@ -25,6 +25,13 @@ html[xmlns] .clear{display:block;}
 
 a{outline:none; text-decoration:none;}
 
+a.button {
+	border-radius: 3px;
+	margin: 3px;
+	border: 1px solid silver;
+	padding: 5px;
+}
+
 code{font-weight:normal; font-style:normal; font-family:Georgia, "Times New Roman", Times, serif;}
 
 textarea {
@@ -55,6 +62,7 @@ div.wrapper{display:block; width:960px; margin:0 auto; padding:0; text-align:lef
 .row4 a{color:#76C38F; background-color:#202020;}
 .row5, .row5 a{color:#999999; background-color:#202020;}
 
+.row2, .row2 a{color:#FFFFFF;}
 /* ----------------------------------------------Generalise------------------------------------- */
 
 #header, #container, #footer, #copyright{display:block; width:900px; margin:0 auto;}
