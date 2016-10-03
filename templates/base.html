@@ -34,25 +34,10 @@ Licence URI: http://www.os-templates.com/template-terms
 }	
 </style>
 </head>
-<body>
+<body id="top">
 <a href="#" class="scrollToTop">回上方</a>	
-<div class="wrapper row1">
-  <header id="header" class="clear">
-    <div id="hgroup">
-      <h1><a href="/">L<span>earn Python</span></a></h1>
-      <h2>玩遊戲、架網站、學物理<br>
-        高慧君老師製作</h2>
-    </div>
-		<form action="#" method="post">
-      <fieldset>
- 		{% if user.is_authenticated %}				
-				<a href="/account/avatar/"><img src="/static/avatar/s{{ user.profile.avatar }}.png"></a> <strong>{{user.first_name}}</strong>
-		{% endif %}
-      </fieldset>
-    </form>    
-  </header>
-</div>
 <div class="wrapper row2">
+	<div class="fl_left">
   <nav id="topnav">
     <ul class="clear">
 			<li><a class="active" href="/">Home</a></li>
@@ -93,10 +78,19 @@ Licence URI: http://www.os-templates.com/template-terms
 		{% else %}
 			<li><a href="/account/register" class='button'>註冊新帳號</a></li>
 			<li><a href="/account/login" class='button'>登入</a></li>
-		{% endif %}
+		{% endif %}			
     </ul>
   </nav>
+	</div>
+	<div class="fl_right">
+			 {% if user.is_authenticated %}				
+				<a href="/account/avatar/"><img src="/static/avatar/s{{ user.profile.avatar }}.png"></a><strong>{{user.first_name}}</strong>
+				{% endif %}	
+	</div>	
 </div>
+<!--
+
+-->
 <!-- content -->
 <div class="wrapper row3">
   <div id="container" class="clear"> 
