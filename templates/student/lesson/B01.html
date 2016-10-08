@@ -5,13 +5,16 @@
 <h1>
   第一個程式
 </h1>
-
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+  <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">visual</span> <span class="kn">import</span> <span class="o">*</span>
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># -*- coding: utf8 -*-</span>
+<span class="c"># 匯入視覺化套件</span>
+<span class="kn">from</span> <span class="nn">visual</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="c">#產生一個寬400像素，高400像素的3度空間以進行繪圖</span>
 <span class="n">scene</span> <span class="o">=</span> <span class="n">display</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
@@ -20,8 +23,13 @@
 </pre></div>
 </td></tr></table></div>
   
+
+<BR>第6行程式會開一個專屬視窗,並以 scene 為名字,代表此視窗,而視窗在開啟時,右方為模擬世界中的+x 軸、向上為+y 軸、射出紙面為+z 軸。width 與 height 是視窗的寬與高,單位是顯示器的像素。
 <BR>
-<img src="/static/lesson/2Lesson01.png">
+  <BR>第8行程式會產生一個 box 物件,在視窗中畫一個非常扁平的 box,代表地板,取名為 floor。length, height, width 為長(平行 x 軸)、高(y 軸)、寬(z 軸)
+<BR>
+<BR>
+<img src="/static/lesson/2Lesson01.png">　<img src="/static/images/box.png">
 <BR><BR>
   
 上圖看起來不像是立體空間，反而像是一張平面圖，所以我們試著設定一下視角的中心點，調整一下Y軸。<BR>
@@ -29,6 +37,7 @@
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">scene</span> <span class="o">=</span> <span class="n">display</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.06</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
 </pre></div>
 </td></tr></table></div>
+
   
 <BR>
 <img src="/static/lesson/2Lesson02.png">
@@ -105,7 +114,9 @@
 </span><span class="hll">    <span class="n">cube</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.001</span>
 </span></pre></div>
 </td></tr></table></div>
-<BR>  
+<BR>
+在迴圈中,可以用 rate 來調整執行速度的快慢,在此 for 下的附屬程式碼,會以每秒 100 次的頻率被執行。
+<BR><BR>  
 <h1>
 作業  
 </h1>
